@@ -2,6 +2,9 @@ import Layout from './components/layout/Layout'
 import useResume from './hooks/useResume'
 import ProfileSection from './components/sections/ProfileSection'
 import EducationSection from './components/sections/EducationSection'
+import ExperienceSection from './components/sections/ExperienceSection'
+import ProjectsSection from './components/sections/ProjectsSection'
+import SkillsSection from './components/sections/SkillsSection'
 
 function App() {
   const { resumeData, loading } = useResume()
@@ -16,61 +19,13 @@ function App() {
         return <EducationSection />
 
       case 'experience':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                💼 Work Experience
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Add internships, jobs, and professional experience.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Experience form will be added in Prompt 3.3
-              </p>
-            </div>
-          </div>
-        )
+        return <ExperienceSection />
 
       case 'projects':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                🚀 Projects
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Showcase your personal and academic projects.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Projects form will be added in Prompt 3.4
-              </p>
-            </div>
-          </div>
-        )
+        return <ProjectsSection />
 
       case 'skills':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                ⚡ Technical Skills
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                List your programming languages, frameworks, tools, and technologies.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Skills form will be added in the next phase
-              </p>
-            </div>
-          </div>
-        )
+        return <SkillsSection />
 
       case 'certifications':
         return (
@@ -85,7 +40,7 @@ function App() {
             </div>
             <div className="card p-6">
               <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Certifications form will be added in the next phase
+                📝 Certifications form will be added in Prompt 3.6
               </p>
             </div>
           </div>
