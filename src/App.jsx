@@ -5,6 +5,12 @@ import EducationSection from './components/sections/EducationSection'
 import ExperienceSection from './components/sections/ExperienceSection'
 import ProjectsSection from './components/sections/ProjectsSection'
 import SkillsSection from './components/sections/SkillsSection'
+import CertificationsSection from './components/sections/CertificationsSection'
+import AchievementsSection from './components/sections/AchievementsSection'
+import PORSection from './components/sections/PORSection'
+import PublicationsSection from './components/sections/PublicationsSection'
+import ExtracurricularSection from './components/sections/ExtracurricularSection'
+import LanguagesSection from './components/sections/LanguagesSection'
 
 function App() {
   const { resumeData, loading } = useResume()
@@ -28,118 +34,22 @@ function App() {
         return <SkillsSection />
 
       case 'certifications':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                📜 Certifications
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Add online courses, certificates, and professional credentials.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Certifications form will be added in Prompt 3.6
-              </p>
-            </div>
-          </div>
-        )
+        return <CertificationsSection />
 
       case 'achievements':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                🏆 Achievements & Awards
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Highlight your awards, competitions, and recognitions.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Achievements form will be added in the next phase
-              </p>
-            </div>
-          </div>
-        )
+        return <AchievementsSection />
 
       case 'por':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                👥 Positions of Responsibility
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Leadership roles, club positions, and team management experience.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Leadership form will be added in the next phase
-              </p>
-            </div>
-          </div>
-        )
+        return <PORSection />
 
       case 'publications':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                📝 Publications & Research
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Research papers, publications, and academic contributions.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Publications form will be added in the next phase
-              </p>
-            </div>
-          </div>
-        )
+        return <PublicationsSection />
 
       case 'extracurricular':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                🎯 Extracurricular Activities
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Clubs, volunteering, sports, and community involvement.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Extracurricular form will be added in the next phase
-              </p>
-            </div>
-          </div>
-        )
+        return <ExtracurricularSection />
 
       case 'languages':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                🌐 Languages
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Spoken languages and proficiency levels.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Languages form will be added in the next phase
-              </p>
-            </div>
-          </div>
-        )
+        return <LanguagesSection />
 
       case 'preview':
         return (
