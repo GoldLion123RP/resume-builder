@@ -13,7 +13,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
@@ -22,9 +21,7 @@
       "@context/*": ["./src/context/*"],
       "@data/*": ["./src/data/*"],
       "@styles/*": ["./src/styles/*"]
-    },
-    
-    "ignoreDeprecations": "5.0"
+    }
   },
   "include": [
     "src/**/*"
