@@ -7,32 +7,34 @@ const Layout = ({ children }) => {
   const [activeSection, setActiveSection] = useState('profile')
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      {/* Header - Fixed at top */}
       <Header />
 
-      {/* Main Content Area */}
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
+      {/* Content Area - Below Header */}
+      <div className="flex">
+        {/* Sidebar - Fixed position on desktop */}
         <Sidebar 
           activeSection={activeSection} 
           onSectionChange={setActiveSection}
         />
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            {/* Pass activeSection to children */}
-            {typeof children === 'function' 
-              ? children({ activeSection, setActiveSection })
-              : children
-            }
-          </div>
-        </main>
+        {/* Main Content Area */}
+        <div className="flex-1 lg:ml-72">
+          {/* Scrollable Content */}
+          <main className="min-h-[calc(100vh-4rem)]">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              {typeof children === 'function' 
+                ? children({ activeSection, setActiveSection })
+                : children
+              }
+            </div>
+          </main>
+          
+          {/* Footer - Full width */}
+          <Footer />
+        </div>
       </div>
-
-      {/* Footer */}
-      <Footer />
     </div>
   )
 }

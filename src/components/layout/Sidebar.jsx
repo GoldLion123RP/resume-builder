@@ -93,14 +93,13 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
     switch (sectionId) {
       case 'profile':
         const profileFields = Object.values(resumeData.profile || {}).filter(v => v && v !== '')
-        return Math.round((profileFields.length / 8) * 100) // 8 total fields
+        return Math.round((profileFields.length / 8) * 100)
       
       case 'skills':
         const skillCategories = Object.values(resumeData.skills || {}).filter(arr => arr && arr.length > 0)
         return skillCategories.length > 0 ? 100 : 0
       
       default:
-        // For array-based sections
         const items = resumeData[sectionId] || []
         return items.length > 0 ? 100 : 0
     }
@@ -120,7 +119,7 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
   // Sidebar content
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
-      {/* Section List */}
+      {/* Section List - Scrollable */}
       <nav className="flex-1 overflow-y-auto scrollbar-thin py-4">
         <div className="space-y-1 px-3">
           {sections.map((section) => {
@@ -192,8 +191,8 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
         </div>
       </nav>
 
-      {/* Bottom: Preview & Export */}
-      <div className="border-t border-gray-200 dark:border-gray-700 p-4 space-y-2">
+      {/* Bottom: Preview & Export - Fixed at bottom */}
+      <div className="border-t border-gray-200 dark:border-gray-700 p-4 space-y-2 bg-white dark:bg-gray-800">
         <button
           onClick={() => handleSectionClick('preview')}
           className={`
@@ -224,30 +223,43 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
 
   return (
     <>
-      {/* Mobile Menu Toggle */}
+      {/* Mobile Menu Toggle Button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="lg:hidden fixed bottom-4 right-4 z-40 p-3 bg-primary-500 text-white rounded-full shadow-lg hover:bg-primary-600 transition-colors"
+        className="lg:hidden fixed bottom-4 right-4 z-50 p-3 bg-primary-500 text-white rounded-full shadow-lg hover:bg-primary-600 transition-colors"
+        aria-label="Toggle menu"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+        {isMobileMenuOpen ? (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        ) : (
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        )}
       </button>
 
       {/* Mobile Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/50 z-30"
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
           onClick={() => setIsMobileMenuOpen(false)}
-        ></div>
+        />
       )}
 
-      {/* Sidebar */}
+      {/* Desktop Sidebar - Fixed */}
+      <aside className="hidden lg:block fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-30">
+        <SidebarContent />
+      </aside>
+
+      {/* Mobile Sidebar - Slide in */}
       <aside
         className={`
-          fixed lg:sticky top-16 left-0 h-[calc(100vh-4rem)] w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 z-40
-          transform transition-transform duration-300 lg:transform-none
-          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+          lg:hidden fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] 
+          bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 
+          z-50 transform transition-transform duration-300 ease-in-out
+          ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         <SidebarContent />
