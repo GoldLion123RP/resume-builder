@@ -1,5 +1,6 @@
 import Layout from './components/layout/Layout'
 import useResume from './hooks/useResume'
+import ProfileSection from './components/sections/ProfileSection'
 
 function App() {
   const { resumeData, loading } = useResume()
@@ -8,23 +9,7 @@ function App() {
   const renderSectionContent = (activeSection) => {
     switch (activeSection) {
       case 'profile':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                Profile Information
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Add your basic contact details and professional summary.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Profile form will be added in the next phase
-              </p>
-            </div>
-          </div>
-        )
+        return <ProfileSection />
 
       case 'education':
         return (
@@ -39,7 +24,7 @@ function App() {
             </div>
             <div className="card p-6">
               <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Education form will be added in the next phase
+                📝 Education form will be added in Prompt 3.2
               </p>
             </div>
           </div>
@@ -58,7 +43,7 @@ function App() {
             </div>
             <div className="card p-6">
               <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Experience form will be added in the next phase
+                📝 Experience form will be added in Prompt 3.3
               </p>
             </div>
           </div>
@@ -77,7 +62,7 @@ function App() {
             </div>
             <div className="card p-6">
               <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📝 Projects form will be added in the next phase
+                📝 Projects form will be added in Prompt 3.4
               </p>
             </div>
           </div>
