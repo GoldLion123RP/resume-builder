@@ -14,13 +14,114 @@ import LanguagesSection from './components/sections/LanguagesSection'
 import ResumePreview from './components/preview/ResumePreview'
 import ExportSection from './components/export/ExportSection'
 import TipsPanel from './components/tips/TipsPanel'
+import ProgressTracker from './components/features/ProgressTracker'
 
 function App() {
   const { resumeData, loading } = useResume()
 
   // Render section content based on active section
-  const renderSectionContent = (activeSection) => {
+  const renderSectionContent = (activeSection, setActiveSection) => {
     switch (activeSection) {
+      case 'dashboard':
+        return (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                📊 Dashboard
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400">
+                Track your resume progress and get started quickly
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* Main Progress Card - Spans 2 columns */}
+              <div className="lg:col-span-2 card p-6">
+                <ProgressTracker onSectionClick={setActiveSection} />
+              </div>
+
+              {/* Quick Actions Card */}
+              <div className="space-y-6">
+                {/* Quick Stats */}
+                <div className="card p-6">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+                    📈 Quick Stats
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Education</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        {resumeData?.education?.length || 0}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Experience</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        {resumeData?.experience?.length || 0}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Projects</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        {resumeData?.projects?.length || 0}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Skills</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        {resumeData?.skills?.length || 0}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600 dark:text-gray-400">Certifications</span>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        {resumeData?.certifications?.length || 0}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Quick Actions */}
+                <div className="card p-6">
+                  <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+                    ⚡ Quick Actions
+                  </h3>
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => setActiveSection('profile')}
+                      className="w-full btn-secondary py-2 text-sm"
+                    >
+                      ✏️ Edit Profile
+                    </button>
+                    <button
+                      onClick={() => setActiveSection('preview')}
+                      className="w-full btn-secondary py-2 text-sm"
+                    >
+                      👁️ Preview Resume
+                    </button>
+                    <button
+                      onClick={() => setActiveSection('export')}
+                      className="w-full btn-primary py-2 text-sm"
+                    >
+                      📥 Download Resume
+                    </button>
+                  </div>
+                </div>
+
+                {/* Tips Card */}
+                <div className="card p-6 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800">
+                  <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-3">
+                    💡 Pro Tip
+                  </h3>
+                  <p className="text-sm text-blue-800 dark:text-blue-200">
+                    Complete all required sections first, then add optional sections to make your resume stand out!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+
       case 'profile':
         return <ProfileSection />
 
@@ -97,7 +198,7 @@ function App() {
   return (
     <>
       <Layout>
-        {({ activeSection }) => renderSectionContent(activeSection)}
+        {({ activeSection, setActiveSection }) => renderSectionContent(activeSection, setActiveSection)}
       </Layout>
       
       {/* Tips Panel - Always accessible */}

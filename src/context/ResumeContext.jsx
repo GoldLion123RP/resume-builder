@@ -16,7 +16,7 @@ export const ResumeProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [lastSaved, setLastSaved] = useState(null)
-  
+
   // Ref for debounced save
   const saveTimeoutRef = useRef(null)
 
@@ -138,7 +138,7 @@ export const ResumeProvider = ({ children }) => {
     setResumeData(prev => {
       const newData = {
         ...prev,
-        [sectionName]: prev[sectionName].map(item => 
+        [sectionName]: prev[sectionName].map(item =>
           item.id === itemId ? { ...item, ...updates } : item
         ),
         metadata: {
@@ -277,6 +277,53 @@ export const ResumeProvider = ({ children }) => {
     }
   }, [])
 
+  /**
+   * Load sample data or any complete resume data
+   * This replaces current data entirely
+   */
+  const loadCompleteResumeData = useCallback(async (data) => {
+    setSaving(true)
+    try {
+      // Add metadata if not present
+      const dataWithMetadata = {
+        ...data,
+        metadata: {
+          version: '1.0',
+          createdAt: data.metadata?.createdAt || new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        },
+        settings: data.settings || {
+          template: 'modern',
+          colorScheme: 'blue',
+          fontSize: 'medium',
+          pageMargins: 'normal',
+          lineSpacing: 'normal',
+          sectionSpacing: 'normal',
+          customization: {
+            primaryColor: '#3B82F6',
+            accentColor: '#8B5CF6',
+            fontFamily: 'Inter',
+          },
+        },
+      }
+
+      // Update state
+      setResumeData(dataWithMetadata)
+
+      // Save to storage immediately
+      await saveResumeData(dataWithMetadata)
+      setLastSaved(new Date())
+      
+      console.log('✅ Sample data loaded successfully')
+      return true
+    } catch (error) {
+      console.error('❌ Error loading sample data:', error)
+      return false
+    } finally {
+      setSaving(false)
+    }
+  }, [])
+
   // ==========================================
   // CONTEXT VALUE
   // ==========================================
@@ -302,6 +349,7 @@ export const ResumeProvider = ({ children }) => {
     manualSave,
     resetData,
     refreshData,
+    loadCompleteResumeData, // NEW: Load sample data or complete resume
   }
 
   // Don't render children until data is loaded

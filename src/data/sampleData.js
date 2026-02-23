@@ -24,7 +24,7 @@ export const sampleResumeData = {
       endDate: 'June 2020',
       current: false,
       gpa: '8.7/10',
-      coursework: 'Data Structures, Algorithms, Database Systems, Operating Systems, Software Engineering, Web Technologies, Machine Learning',
+      coursework: ['Data Structures', 'Algorithms', 'Database Systems', 'Operating Systems', 'Software Engineering', 'Web Technologies', 'Machine Learning'],
     },
     {
       id: '2',
@@ -35,7 +35,7 @@ export const sampleResumeData = {
       endDate: 'March 2016',
       current: false,
       gpa: '92.4%',
-      coursework: 'Physics, Chemistry, Mathematics, Computer Science',
+      coursework: ['Physics', 'Chemistry', 'Mathematics', 'Computer Science'],
     },
   ],
 
@@ -326,7 +326,7 @@ export const sampleResumeData2 = {
       endDate: 'June 2022',
       current: false,
       gpa: '9.1/10',
-      coursework: 'Machine Learning, Deep Learning, Natural Language Processing, Statistical Computing, Big Data Analytics, Computer Vision',
+      coursework: ['Machine Learning', 'Deep Learning', 'Natural Language Processing', 'Statistical Computing', 'Big Data Analytics', 'Computer Vision'],
     },
     {
       id: '2',
@@ -337,7 +337,7 @@ export const sampleResumeData2 = {
       endDate: 'June 2020',
       current: false,
       gpa: '8.9/10',
-      coursework: 'Probability Theory, Mathematical Statistics, Regression Analysis, Time Series Analysis, Operations Research',
+      coursework: ['Probability Theory', 'Mathematical Statistics', 'Regression Analysis', 'Time Series Analysis', 'Operations Research'],
     },
   ],
 
