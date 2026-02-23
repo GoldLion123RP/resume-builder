@@ -11,6 +11,7 @@ import PORSection from './components/sections/PORSection'
 import PublicationsSection from './components/sections/PublicationsSection'
 import ExtracurricularSection from './components/sections/ExtracurricularSection'
 import LanguagesSection from './components/sections/LanguagesSection'
+import ResumePreview from './components/preview/ResumePreview'
 
 function App() {
   const { resumeData, loading } = useResume()
@@ -54,19 +55,17 @@ function App() {
       case 'preview':
         return (
           <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                👁️ Resume Preview
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                See how your resume will look when exported.
-              </p>
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                  👁️ Resume Preview
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  See how your resume will look when exported. Fill in sections to see them appear here.
+                </p>
+              </div>
             </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                👁️ Preview will be added in Phase 4
-              </p>
-            </div>
+            <ResumePreview />
           </div>
         )
 
