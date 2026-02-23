@@ -1,0 +1,24 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="256" cy="256" r="256" fill="#3B82F6"/>
+  
+  <!-- Document Icon -->
+  <g transform="translate(128, 96)">
+    <!-- Paper -->
+    <path d="M48 0H208L256 48V320C256 337.673 241.673 352 224 352H48C30.327 352 16 337.673 16 320V32C16 14.327 30.327 0 48 0Z" fill="white"/>
+    
+    <!-- Folded Corner -->
+    <path d="M208 0L256 48H224C214.059 48 208 41.941 208 32V0Z" fill="#DBEAFE"/>
+    
+    <!-- Lines (representing text) -->
+    <rect x="56" y="96" width="160" height="12" rx="6" fill="#3B82F6"/>
+    <rect x="56" y="128" width="160" height="12" rx="6" fill="#93C5FD"/>
+    <rect x="56" y="160" width="120" height="12" rx="6" fill="#93C5FD"/>
+    <rect x="56" y="192" width="160" height="12" rx="6" fill="#93C5FD"/>
+    <rect x="56" y="224" width="140" height="12" rx="6" fill="#93C5FD"/>
+    
+    <!-- Profile Icon (circle representing photo) -->
+    <circle cx="96" cy="280" r="20" fill="#3B82F6"/>
+    <path d="M96 300C106.493 300 115 291.493 115 281C115 270.507 106.493 262 96 262C85.507 262 77 270.507 77 281C77 291.493 85.507 300 96 300Z" fill="#DBEAFE"/>
+  </g>
+</svg>
