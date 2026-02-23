@@ -13,6 +13,7 @@ import ExtracurricularSection from './components/sections/ExtracurricularSection
 import LanguagesSection from './components/sections/LanguagesSection'
 import ResumePreview from './components/preview/ResumePreview'
 import ExportSection from './components/export/ExportSection'
+import TipsPanel from './components/tips/TipsPanel'
 
 function App() {
   const { resumeData, loading } = useResume()
@@ -94,9 +95,14 @@ function App() {
   }
 
   return (
-    <Layout>
-      {({ activeSection }) => renderSectionContent(activeSection)}
-    </Layout>
+    <>
+      <Layout>
+        {({ activeSection }) => renderSectionContent(activeSection)}
+      </Layout>
+      
+      {/* Tips Panel - Always accessible */}
+      <TipsPanel />
+    </>
   )
 }
 

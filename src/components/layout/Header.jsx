@@ -10,6 +10,7 @@ const Header = () => {
   const { theme, resolvedTheme, cycleTheme } = useTheme()
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [imageError, setImageError] = useState(false)
 
   // Get theme icon and label
   const getThemeIcon = () => {
@@ -58,6 +59,7 @@ const Header = () => {
     try {
       await logout()
       setShowUserMenu(false)
+      setImageError(false)
     } catch (error) {
       console.error('Sign out error:', error)
     }
@@ -140,11 +142,12 @@ const Header = () => {
                       onClick={() => setShowUserMenu(!showUserMenu)}
                       className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                     >
-                      {user.photoURL ? (
+                      {user.photoURL && !imageError ? (
                         <img
                           src={user.photoURL}
                           alt={user.displayName || 'User'}
-                          className="w-8 h-8 rounded-full"
+                          className="w-8 h-8 rounded-full object-cover"
+                          onError={() => setImageError(true)}
                         />
                       ) : (
                         <div className="w-8 h-8 rounded-full bg-primary-500 flex items-center justify-center">
