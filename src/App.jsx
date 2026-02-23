@@ -55,15 +55,13 @@ function App() {
       case 'preview':
         return (
           <div className="space-y-6">
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                  👁️ Resume Preview
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  See how your resume will look when exported. Fill in sections to see them appear here.
-                </p>
-              </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                👁️ Resume Preview
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400">
+                Preview your resume with different templates. Switch templates anytime!
+              </p>
             </div>
             <ResumePreview />
           </div>
