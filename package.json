@@ -4,12 +4,15 @@
   "version": "1.0.0",
   "type": "module",
   "description": "ATS-friendly Resume Builder for Technical University Students - Built with React, Firebase, and Tailwind CSS",
-  "author": "Your Name",
+  "author": "Rahul Pal <goldlion123.rp@gmail.com>",
   "license": "MIT",
-  "homepage": "https://yourusername.github.io/resume-builder",
+  "homepage": "https://goldlion123rp.github.io/resume-builder",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/resume-builder.git"
+    "url": "https://github.com/GoldLion123RP/resume-builder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GoldLion123RP/resume-builder/issues"
   },
   "keywords": [
     "resume",
@@ -19,7 +22,12 @@
     "firebase",
     "tailwind",
     "students",
-    "portfolio"
+    "portfolio",
+    "cv-builder",
+    "free-resume",
+    "technical-resume",
+    "indian-resume",
+    "bengali-resume"
   ],
   "scripts": {
     "dev": "vite",

@@ -1,0 +1,32 @@
+{
+  "name": "Resume Builder - ATS-Friendly Resume Creator",
+  "short_name": "Resume Builder",
+  "description": "Free ATS-friendly Resume Builder for technical university students",
+  "start_url": "/resume-builder/",
+  "scope": "/resume-builder/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/resume-builder/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["productivity", "business", "utilities"],
+  "screenshots": [],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "New Resume",
+      "short_name": "New",
+      "description": "Create a new resume",
+      "url": "/resume-builder/?action=new",
+      "icons": []
+    }
+  ]
+}
