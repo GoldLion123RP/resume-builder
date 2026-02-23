@@ -12,6 +12,7 @@ import PublicationsSection from './components/sections/PublicationsSection'
 import ExtracurricularSection from './components/sections/ExtracurricularSection'
 import LanguagesSection from './components/sections/LanguagesSection'
 import ResumePreview from './components/preview/ResumePreview'
+import ExportSection from './components/export/ExportSection'
 
 function App() {
   const { resumeData, loading } = useResume()
@@ -68,23 +69,7 @@ function App() {
         )
 
       case 'export':
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                📥 Download Resume
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400">
-                Export your resume as PDF, DOCX, or plain text.
-              </p>
-            </div>
-            <div className="card p-6">
-              <p className="text-gray-500 dark:text-gray-400 text-center py-8">
-                📥 Export functionality will be added in Phase 5
-              </p>
-            </div>
-          </div>
-        )
+        return <ExportSection />
 
       default:
         return (
