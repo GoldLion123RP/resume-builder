@@ -13,7 +13,7 @@ const Footer = () => {
           {/* Center: Links */}
           <div className="flex items-center gap-6">
             <a
-              href="https://github.com/yourusername/resume-builder"
+              href="https://github.com/goldlion123rp/resume-builder"
               target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors flex items-center gap-1"

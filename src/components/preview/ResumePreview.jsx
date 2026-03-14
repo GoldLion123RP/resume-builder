@@ -50,7 +50,8 @@ const ResumePreview = () => {
    const handlePdfExport = async () => {
      setIsExporting(true)
      try {
-       await exportToPdf(resumeData, { atsMode: false })
+       const atsMode = selectedTemplate === 'ats'
+       await exportToPdf(resumeData, { atsMode })
        // Success message would typically be handled via toast context
        console.log('✅ PDF downloaded successfully!')
      } catch (error) {
