@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header - Fixed at top */}
-      <Header />
+      <Header activeSection={activeSection} setActiveSection={setActiveSection} />
 
       {/* Content Area - Below Header */}
       <div className="flex">

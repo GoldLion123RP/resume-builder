@@ -4,7 +4,7 @@ import useResume from '@/hooks/useResume'
 import useTheme from '@/hooks/useTheme'
 import AuthModal from '@/components/auth/AuthModal'
 
-const Header = () => {
+const Header = ({ activeSection, setActiveSection }) => {
   const { user, isAuthenticated, logout, isFirebaseEnabled } = useAuth()
   const { saving, lastSaved, manualSave } = useResume()
   const { theme, resolvedTheme, cycleTheme } = useTheme()
@@ -80,20 +80,20 @@ const Header = () => {
       <header className="sticky top-0 z-50 bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            {/* Left: Logo & Title */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span className="text-white font-bold text-xl">R</span>
-              </div>
-              <div>
-                <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
-                  Resume Builder
-                </h1>
-                <p className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
-                  {getLastSavedText()}
-                </p>
-              </div>
-            </div>
+             {/* Left: Logo & Title */}
+             <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveSection('dashboard')}>
+               <div className="w-10 h-10 bg-primary-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                 <span className="text-white font-bold text-xl">R</span>
+               </div>
+               <div>
+                 <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
+                   Resume Builder
+                 </h1>
+                 <p className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
+                   {getLastSavedText()}
+                 </p>
+               </div>
+             </div>
 
             {/* Right: Actions */}
             <div className="flex items-center gap-2 sm:gap-4">

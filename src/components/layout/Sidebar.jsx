@@ -141,12 +141,13 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
     return getSectionCompletion(sectionId) > 0
   }
 
-  // Handle section click
-  const handleSectionClick = (sectionId) => {
-    saveScrollPosition()
-    onSectionChange(sectionId)
-    setIsMobileMenuOpen(false)
-  }
+   // Handle section click
+   const handleSectionClick = (sectionId) => {
+     // Scroll to top when switching sections
+     scrollPositionRef.current = 0
+     onSectionChange(sectionId)
+     setIsMobileMenuOpen(false)
+   }
 
   // Render section button
   const renderSectionButton = (section) => {

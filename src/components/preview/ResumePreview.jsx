@@ -2,6 +2,7 @@ import { useState } from 'react'
 import useResume from '@/hooks/useResume'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+import { exportToPdf } from '@/lib/export/pdfExport'
 
 // Import all templates
 import ClassicTemplate from './templates/ClassicTemplate'
@@ -14,6 +15,7 @@ import ATSTemplate from './templates/ATSTemplate'
 const ResumePreview = () => {
   const { resumeData, updateSettings } = useResume()
   const [showTemplateSelector, setShowTemplateSelector] = useState(false)
+  const [isExporting, setIsExporting] = useState(false)
 
   if (!resumeData) {
     return (
@@ -38,36 +40,75 @@ const ResumePreview = () => {
   const currentTemplate = templates.find(t => t.id === selectedTemplate) || templates[1]
   const TemplateComponent = currentTemplate.component
 
-  const handleSelectTemplate = (templateId) => {
-    updateSettings({ selectedTemplate: templateId })
-    setShowTemplateSelector(false)
-  }
+    const handleSelectTemplate = (templateId) => {
+      updateSettings({ selectedTemplate: templateId })
+      // Keep template selector open after selection
+      // setShowTemplateSelector(false)
+    }
+
+   // Handle PDF Export
+   const handlePdfExport = async () => {
+     setIsExporting(true)
+     try {
+       await exportToPdf(resumeData, { atsMode: false })
+       // Success message would typically be handled via toast context
+       console.log('✅ PDF downloaded successfully!')
+     } catch (error) {
+       console.error('Export error:', error)
+       alert(`Failed to export PDF: ${error.message}`)
+     } finally {
+       setIsExporting(false)
+     }
+   }
 
   return (
     <div className="space-y-4">
-      {/* Template Selector Bar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">{currentTemplate.icon}</span>
-          <div>
-            <p className="font-medium text-gray-900 dark:text-white">
-              {currentTemplate.name} Template
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Currently selected
-            </p>
-          </div>
-        </div>
-        <Button
-          variant="outline"
-          onClick={() => setShowTemplateSelector(!showTemplateSelector)}
-        >
-          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
-          </svg>
-          Change Template
-        </Button>
-      </div>
+       {/* Template Selector Bar */}
+       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+         <div className="flex items-center gap-3">
+           <span className="text-2xl">{currentTemplate.icon}</span>
+           <div>
+             <p className="font-medium text-gray-900 dark:text-white">
+               {currentTemplate.name} Template
+             </p>
+             <p className="text-sm text-gray-500 dark:text-gray-400">
+               Currently selected
+             </p>
+           </div>
+         </div>
+         <div className="flex items-center gap-2 sm:gap-4">
+           <Button
+             variant="outline"
+             onClick={() => setShowTemplateSelector(!showTemplateSelector)}
+           >
+             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+             </svg>
+             Change Template
+           </Button>
+           
+           {/* Download Button */}
+           <Button
+             onClick={handlePdfExport}
+             disabled={isExporting || !resumeData}
+             className="hidden sm:flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+           >
+             {isExporting ? (
+               <>
+                 <div className="animate-spin h-4 w-4 border-2 border-gray-400 border-t-transparent rounded-full"></div>
+                 <span>Exporting...</span>
+               </>
+             ) : (
+               <>
+                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                 </svg>
+                 <span>Download PDF</span>
+               </>
+             )}
+           </Button>
+         </div>
+       </div>
 
       {/* Template Quick Selector */}
       {showTemplateSelector && (
