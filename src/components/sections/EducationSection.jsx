@@ -6,7 +6,8 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import useResume from '@/hooks/useResume'
+import { useResume } from '@/hooks/useResume'
+import { validateField, validationRules } from '@/lib/validation'
 
 const EducationSection = () => {
   const { resumeData, addItem, updateItem, deleteItem } = useResume()
@@ -16,6 +17,7 @@ const EducationSection = () => {
   const [isAdding, setIsAdding] = useState(false)
   const [newEntry, setNewEntry] = useState(getEmptyEducation())
   const [courseworkInput, setCourseworkInput] = useState('')
+  const [validationErrors, setValidationErrors] = useState({})
 
   // Empty education template
   function getEmptyEducation() {
@@ -45,6 +47,45 @@ const EducationSection = () => {
     setIsAdding(true)
     setNewEntry({ ...getEmptyEducation(), id: generateId() })
     setExpandedId(null)
+  }
+
+  // Handle input changes with validation
+  const handleChange = (field, value, isNew = false) => {
+    // Validate the field
+    let error = ''
+    switch (field) {
+      case 'degree':
+      case 'institution':
+        error = validateField('required', value)
+        break
+      case 'startDate':
+      case 'endDate':
+        // For date validation, we need to check if it's a valid month format
+        if (value && !/^\d{4}-\d{2}$/.test(value)) {
+          error = 'Please enter a valid date (YYYY-MM)'
+        }
+        break
+      case 'cgpa':
+        if (value) {
+          error = validateField('cgpa', value, entry?.maxCgpa || '10')
+        }
+        break
+      default:
+        error = ''
+    }
+    
+    // Update validation errors
+    setValidationErrors(prev => ({
+      ...prev,
+      [field]: error
+    }))
+    
+    // Update the entry if valid
+    if (isNew) {
+      setNewEntry({ ...newEntry, [field]: value })
+    } else if (expandedId) {
+      updateItem('education', expandedId, { [field]: value })
+    }
   }
 
   // Handle save new entry

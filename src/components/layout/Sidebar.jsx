@@ -115,6 +115,13 @@ const Sidebar = ({ activeSection, onSectionChange }) => {
       required: false,
       description: 'Language proficiency',
     },
+    {
+      id: 'import',
+      name: 'Import Profile',
+      icon: '📥',
+      required: false,
+      description: 'Import from GitHub/LinkedIn',
+    },
   ]
 
   // Calculate completion for each section

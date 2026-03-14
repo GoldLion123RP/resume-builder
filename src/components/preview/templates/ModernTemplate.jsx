@@ -196,7 +196,7 @@ const ModernTemplate = ({ data }) => {
               skills.map((skill, i) => (
                 <p key={i}>
                   <span className="font-semibold text-gray-900">{skill.category}:</span>{' '}
-                  {toDisplayString(skill.skills)}
+                  {typeof skill.skills === 'string' ? skill.skills : toDisplayString(skill.skills)}
                 </p>
               ))
             ) : (

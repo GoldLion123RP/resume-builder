@@ -3,6 +3,7 @@ import useResume from '@/hooks/useResume'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { exportToPdf } from '@/lib/export/pdfExport'
+import { ResumePreviewSkeleton } from '@/components/common/Skeleton'
 
 // Import all templates
 import ClassicTemplate from './templates/ClassicTemplate'
@@ -20,7 +21,7 @@ const ResumePreview = () => {
   if (!resumeData) {
     return (
       <div className="flex items-center justify-center h-64">
-        <p className="text-gray-500">Loading resume data...</p>
+        <ResumePreviewSkeleton />
       </div>
     )
   }

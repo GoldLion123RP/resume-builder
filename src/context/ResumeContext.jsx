@@ -3,7 +3,13 @@ import {
   saveResumeData, 
   loadResumeData, 
   getEmptyResumeData,
-  initializeResumeData 
+  initializeResumeData,
+  saveResumeById,
+  loadResumeById,
+  loadResumesFromLocalStorage,
+  deleteResumeById,
+  getActiveResumeId,
+  setActiveResumeId
 } from '@/lib/storage'
 
 // Create the context
@@ -16,6 +22,8 @@ export const ResumeProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [lastSaved, setLastSaved] = useState(null)
+  const [resumes, setResumes] = useState({})
+  const [activeResumeId, setActiveResumeId] = useState(null)
 
   // Ref for debounced save
   const saveTimeoutRef = useRef(null)
@@ -24,11 +32,24 @@ export const ResumeProvider = ({ children }) => {
   // INITIALIZATION
   // ==========================================
 
-  // Load resume data on mount
+  // Load resume data and resumes on mount
   useEffect(() => {
     const loadData = async () => {
       setLoading(true)
       try {
+        // Load all resumes
+        const storedResumes = await loadResumesFromLocalStorage()
+        if (storedResumes) {
+          setResumes(storedResumes)
+        }
+        
+        // Load active resume ID
+        const activeId = await getActiveResumeId()
+        if (activeId) {
+          setActiveResumeId(activeId)
+        }
+        
+        // Load resume data
         const data = await initializeResumeData()
         setResumeData(data)
         setLastSaved(new Date())
@@ -62,7 +83,23 @@ export const ResumeProvider = ({ children }) => {
     saveTimeoutRef.current = setTimeout(async () => {
       setSaving(true)
       try {
-        await saveResumeData(data)
+        // Save with ID if we have an active resume
+        const dataToSave = {
+          ...data,
+          metadata: {
+            ...data.metadata,
+            updatedAt: new Date().toISOString()
+          }
+        }
+        
+        // If we have an active resume ID, save with that ID
+        if (activeResumeId) {
+          await saveResumeById(activeResumeId, dataToSave)
+        } else {
+          // Otherwise use general save
+          await saveResumeData(dataToSave)
+        }
+        
         setLastSaved(new Date())
         console.log('💾 Auto-saved')
       } catch (error) {
@@ -71,7 +108,7 @@ export const ResumeProvider = ({ children }) => {
         setSaving(false)
       }
     }, 2000) // 2 second delay
-  }, [])
+  }, [activeResumeId])
 
   // ==========================================
   // UPDATE FUNCTIONS
@@ -93,7 +130,7 @@ export const ResumeProvider = ({ children }) => {
       debouncedSave(newData)
       return newData
     })
-  }, [debouncedSave])
+  }, [debouncedSave, activeResumeId])
 
   /**
    * Update array-based sections (education, experience, projects, etc.)
@@ -111,7 +148,7 @@ export const ResumeProvider = ({ children }) => {
       debouncedSave(newData)
       return newData
     })
-  }, [debouncedSave])
+  }, [debouncedSave, activeResumeId])
 
   /**
    * Add item to array section
@@ -129,7 +166,7 @@ export const ResumeProvider = ({ children }) => {
       debouncedSave(newData)
       return newData
     })
-  }, [debouncedSave])
+  }, [debouncedSave, activeResumeId])
 
   /**
    * Update item in array section
@@ -149,7 +186,7 @@ export const ResumeProvider = ({ children }) => {
       debouncedSave(newData)
       return newData
     })
-  }, [debouncedSave])
+  }, [debouncedSave, activeResumeId])
 
   /**
    * Delete item from array section
@@ -167,7 +204,7 @@ export const ResumeProvider = ({ children }) => {
       debouncedSave(newData)
       return newData
     })
-  }, [debouncedSave])
+  }, [debouncedSave, activeResumeId])
 
   /**
    * Update skills section
@@ -188,7 +225,7 @@ export const ResumeProvider = ({ children }) => {
       debouncedSave(newData)
       return newData
     })
-  }, [debouncedSave])
+  }, [debouncedSave, activeResumeId])
 
   /**
    * Update settings
@@ -206,7 +243,7 @@ export const ResumeProvider = ({ children }) => {
       debouncedSave(newData)
       return newData
     })
-  }, [debouncedSave])
+  }, [debouncedSave, activeResumeId])
 
   /**
    * Update customization settings
@@ -230,7 +267,7 @@ export const ResumeProvider = ({ children }) => {
       debouncedSave(newData)
       return newData
     })
-  }, [debouncedSave])
+  }, [debouncedSave, activeResumeId])
 
   /**
    * Manual save (force immediate save)
@@ -240,7 +277,23 @@ export const ResumeProvider = ({ children }) => {
 
     setSaving(true)
     try {
-      await saveResumeData(resumeData)
+      // Save with ID if we have an active resume
+      const dataToSave = {
+        ...resumeData,
+        metadata: {
+          ...resumeData.metadata,
+          updatedAt: new Date().toISOString()
+        }
+      }
+      
+      // If we have an active resume ID, save with that ID
+      if (activeResumeId) {
+        await saveResumeById(activeResumeId, dataToSave)
+      } else {
+        // Otherwise use general save
+        await saveResumeData(dataToSave)
+      }
+      
       setLastSaved(new Date())
       console.log('✅ Manual save complete')
       return true
@@ -250,7 +303,7 @@ export const ResumeProvider = ({ children }) => {
     } finally {
       setSaving(false)
     }
-  }, [resumeData])
+  }, [resumeData, activeResumeId])
 
   /**
    * Reset to empty data
@@ -334,6 +387,8 @@ export const ResumeProvider = ({ children }) => {
     loading,
     saving,
     lastSaved,
+    resumes,
+    activeResumeId,
 
     // Update functions
     updateProfile,
@@ -344,6 +399,84 @@ export const ResumeProvider = ({ children }) => {
     updateSkills,
     updateSettings,
     updateCustomization,
+
+    // Resume management functions
+    saveResumeAs: async (resumeId) => {
+      if (!resumeData) return false
+      const success = await saveResumeById(resumeId, resumeData)
+      if (success) {
+        // Update local resumes state
+        setResumes(prev => ({
+          ...prev,
+          [resumeId]: {
+            ...resumeData,
+            metadata: {
+              ...resumeData.metadata,
+              id: resumeId,
+              updatedAt: new Date().toISOString()
+            }
+          }
+        }))
+        // Set as active resume
+        setActiveResumeId(resumeId)
+      }
+      return success
+    },
+    loadResume: async (resumeId) => {
+      const resume = await loadResumeById(resumeId)
+      if (resume) {
+        setResumeData(resume)
+        setActiveResumeId(resumeId)
+        setLastSaved(new Date())
+        // Update local resumes state
+        setResumes(prev => ({
+          ...prev,
+          [resumeId]: resume
+        }))
+        return true
+      }
+      return false
+    },
+    deleteResume: async (resumeId) => {
+      const success = await deleteResumeById(resumeId)
+      if (success) {
+        // Update local resumes state
+        setResumes(prev => {
+          const newResumes = {...prev}
+          delete newResumes[resumeId]
+          return newResumes
+        })
+        // If deleting active resume, load another or create new
+        if (activeResumeId === resumeId) {
+          const remainingResumes = await loadResumesFromLocalStorage()
+          if (remainingResumes && Object.keys(remainingResumes).length > 0) {
+            const firstId = Object.keys(remainingResumes)[0]
+            await loadResume(firstId)
+          } else {
+            // Create new empty resume
+            const emptyData = getEmptyResumeData()
+            setResumeData(emptyData)
+            setActiveResumeId(null)
+            await saveResumeData(emptyData)
+          }
+        }
+        return true
+      }
+      return false
+    },
+    setActiveResume: async (resumeId) => {
+      const success = await setActiveResumeId(resumeId)
+      if (success) {
+        setActiveResumeId(resumeId)
+        // Load the resume data
+        const resume = await loadResumeById(resumeId)
+        if (resume) {
+          setResumeData(resume)
+          setLastSaved(new Date())
+        }
+      }
+      return success
+    },
 
     // Utility functions
     manualSave,

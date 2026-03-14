@@ -69,7 +69,7 @@ function SampleDataLoader({ onClose }) {
         experience: sampleResumeData.experience.length,
         education: sampleResumeData.education.length,
         projects: sampleResumeData.projects.length,
-        skills: sampleResumeData.skills.length,
+        skills: Object.values(sampleResumeData.skills).flat().length,
       },
     },
     {
@@ -80,7 +80,7 @@ function SampleDataLoader({ onClose }) {
         experience: sampleResumeData2.experience.length,
         education: sampleResumeData2.education.length,
         projects: sampleResumeData2.projects.length,
-        skills: sampleResumeData2.skills.length,
+        skills: Object.values(sampleResumeData2.skills).flat().length,
       },
     },
   ]

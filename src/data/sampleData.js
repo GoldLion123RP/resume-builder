@@ -125,38 +125,13 @@ export const sampleResumeData = {
     },
   ],
 
-  skills: [
-    {
-      id: '1',
-      category: 'Programming Languages',
-      skills: 'JavaScript, TypeScript, Python, Java, C++, SQL',
-    },
-    {
-      id: '2',
-      category: 'Frontend Technologies',
-      skills: 'React, Next.js, Redux, HTML5, CSS3, Tailwind CSS, Material-UI, Bootstrap',
-    },
-    {
-      id: '3',
-      category: 'Backend Technologies',
-      skills: 'Node.js, Express.js, Django, Flask, RESTful APIs, GraphQL',
-    },
-    {
-      id: '4',
-      category: 'Databases',
-      skills: 'MongoDB, PostgreSQL, MySQL, Redis, Firebase',
-    },
-    {
-      id: '5',
-      category: 'Cloud & DevOps',
-      skills: 'AWS (EC2, S3, Lambda), Docker, Kubernetes, Jenkins, Git, GitHub Actions',
-    },
-    {
-      id: '6',
-      category: 'Tools & Frameworks',
-      skills: 'VS Code, Postman, Jira, Figma, Agile/Scrum, TDD',
-    },
-  ],
+  skills: {
+    languages: ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++', 'SQL'],
+    frameworks: ['React', 'Next.js', 'Redux', 'HTML5', 'CSS3', 'Tailwind CSS', 'Material-UI', 'Bootstrap'],
+    tools: ['VS Code', 'Postman', 'Jira', 'Figma', 'Agile/Scrum', 'TDD'],
+    databases: ['MongoDB', 'PostgreSQL', 'MySQL', 'Redis', 'Firebase'],
+    cloud: ['AWS (EC2, S3, Lambda)', 'Docker', 'Kubernetes', 'Jenkins', 'Git', 'GitHub Actions'],
+  },
 
   certifications: [
     {
@@ -400,38 +375,13 @@ export const sampleResumeData2 = {
     },
   ],
 
-  skills: [
-    {
-      id: '1',
-      category: 'Programming Languages',
-      skills: 'Python, R, SQL, Java, Scala',
-    },
-    {
-      id: '2',
-      category: 'Machine Learning',
-      skills: 'Scikit-learn, TensorFlow, PyTorch, Keras, XGBoost, LightGBM',
-    },
-    {
-      id: '3',
-      category: 'Data Processing',
-      skills: 'Pandas, NumPy, Apache Spark, Hadoop, Dask',
-    },
-    {
-      id: '4',
-      category: 'Visualization',
-      skills: 'Matplotlib, Seaborn, Plotly, Tableau, Power BI',
-    },
-    {
-      id: '5',
-      category: 'Cloud & MLOps',
-      skills: 'AWS (SageMaker, S3, EC2), GCP, Docker, Kubernetes, MLflow, DVC',
-    },
-    {
-      id: '6',
-      category: 'Databases',
-      skills: 'PostgreSQL, MongoDB, Redis, Elasticsearch',
-    },
-  ],
+  skills: {
+    languages: ['Python', 'R', 'SQL', 'Java', 'Scala'],
+    frameworks: ['Scikit-learn', 'TensorFlow', 'PyTorch', 'Keras', 'XGBoost', 'LightGBM'],
+    tools: ['Pandas', 'NumPy', 'Apache Spark', 'Hadoop', 'Dask', 'Matplotlib', 'Seaborn', 'Plotly', 'Tableau', 'Power BI'],
+    databases: ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'],
+    cloud: ['AWS (SageMaker, S3, EC2)', 'GCP', 'Docker', 'Kubernetes', 'MLflow', 'DVC'],
+  },
 
   certifications: [
     {

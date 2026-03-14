@@ -5,7 +5,8 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Avatar } from '@/components/ui/avatar'
-import useResume from '@/hooks/useResume'
+import { useResume } from '@/hooks/useResume'
+import { validateField, validationRules } from '@/lib/validation'
 
 const ProfileSection = () => {
   const { resumeData, updateProfile } = useResume()
@@ -13,10 +14,41 @@ const ProfileSection = () => {
 
   const [imagePreview, setImagePreview] = useState(profile.imageUrl || '')
   const [isUploading, setIsUploading] = useState(false)
+  const [validationErrors, setValidationErrors] = useState({})
 
-  // Handle input changes
+  // Handle input changes with validation
   const handleChange = (field, value) => {
+    // Always update the profile value first (for better UX)
     updateProfile({ [field]: value })
+    
+    // Validate the field and store error for display
+    let error = ''
+    switch (field) {
+      case 'email':
+        error = validateField('email', value)
+        break
+      case 'phone':
+        error = validateField('phone', value)
+        break
+      case 'fullName':
+        error = validateField('required', value)
+        break
+      case 'linkedin':
+      case 'github':
+      case 'portfolio':
+        if (value) {
+          error = validateField('url', value)
+        }
+        break
+      default:
+        error = ''
+    }
+    
+    // Update validation errors for display
+    setValidationErrors(prev => ({
+      ...prev,
+      [field]: error
+    }))
   }
 
   // Handle image upload
@@ -79,7 +111,7 @@ const ProfileSection = () => {
         <CardHeader>
           <CardTitle>Profile Picture</CardTitle>
           <CardDescription>
-            Upload a professional photo (optional, but recommended)
+          Upload a professional photo (optional, but recommended)
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -131,13 +163,13 @@ const ProfileSection = () => {
                     >
                       Remove
                     </Button>
-                  )}
-                </div>
+                )}
               </div>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                JPG, PNG or GIF. Max size 2MB. Square images work best.
-              </p>
             </div>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              JPG, PNG or GIF. Max size 2MB. Square images work best.
+            </p>
+          </div>
           </div>
         </CardContent>
       </Card>
@@ -162,8 +194,12 @@ const ProfileSection = () => {
               placeholder="John Doe"
               value={profile.fullName || ''}
               onChange={(e) => handleChange('fullName', e.target.value)}
+              className={validationErrors.fullName ? 'border-red-500' : ''}
               required
             />
+            {validationErrors.fullName && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.fullName}</p>
+            )}
           </div>
 
           {/* Email and Phone */}
@@ -178,8 +214,12 @@ const ProfileSection = () => {
                 placeholder="john.doe@example.com"
                 value={profile.email || ''}
                 onChange={(e) => handleChange('email', e.target.value)}
+                className={validationErrors.email ? 'border-red-500' : ''}
                 required
               />
+              {validationErrors.email && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.email}</p>
+              )}
             </div>
 
             <div>
@@ -192,24 +232,28 @@ const ProfileSection = () => {
                 placeholder="+1 (234) 567-8900"
                 value={profile.phone || ''}
                 onChange={(e) => handleChange('phone', e.target.value)}
+                className={validationErrors.phone ? 'border-red-500' : ''}
                 required
               />
+              {validationErrors.phone && (
+                <p className="text-red-500 text-xs mt-1">{validationErrors.phone}</p>
+              )}
             </div>
           </div>
 
           {/* Location */}
           <div>
-            <Label htmlFor="location">Location</Label>
-            <Input
-              id="location"
-              type="text"
-              placeholder="City, State, Country"
-              value={profile.location || ''}
-              onChange={(e) => handleChange('location', e.target.value)}
-            />
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              e.g., "San Francisco, CA" or "Remote"
-            </p>
+          <Label htmlFor="location">Location</Label>
+          <Input
+            id="location"
+            type="text"
+            placeholder="City, State, Country"
+            value={profile.location || ''}
+            onChange={(e) => handleChange('location', e.target.value)}
+          />
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            e.g., "San Francisco, CA" or "Remote"
+          </p>
           </div>
         </CardContent>
       </Card>
@@ -232,7 +276,11 @@ const ProfileSection = () => {
               placeholder="https://linkedin.com/in/johndoe"
               value={profile.linkedin || ''}
               onChange={(e) => handleChange('linkedin', e.target.value)}
+              className={validationErrors.linkedin ? 'border-red-500' : ''}
             />
+            {validationErrors.linkedin && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.linkedin}</p>
+            )}
           </div>
 
           {/* GitHub */}
@@ -244,7 +292,11 @@ const ProfileSection = () => {
               placeholder="https://github.com/johndoe"
               value={profile.github || ''}
               onChange={(e) => handleChange('github', e.target.value)}
+              className={validationErrors.github ? 'border-red-500' : ''}
             />
+            {validationErrors.github && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.github}</p>
+            )}
           </div>
 
           {/* Portfolio */}
@@ -256,7 +308,11 @@ const ProfileSection = () => {
               placeholder="https://johndoe.com"
               value={profile.portfolio || ''}
               onChange={(e) => handleChange('portfolio', e.target.value)}
+              className={validationErrors.portfolio ? 'border-red-500' : ''}
             />
+            {validationErrors.portfolio && (
+              <p className="text-red-500 text-xs mt-1">{validationErrors.portfolio}</p>
+            )}
           </div>
         </CardContent>
       </Card>
